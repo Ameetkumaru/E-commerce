@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="autopartsModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="shipping" Type="int" Nullable="false" />
+          <Property Name="handling" Type="int" Nullable="false" />
+          <Property Name="localtax" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="DatePurchased" Type="datetime" Precision="0" />
+          <Property Name="isInCart" Type="bit" Nullable="false" />
+          <Property Name="authID" Type="varchar" MaxLength="20" />
+          <Property Name="partName" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="guest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="shippingAddress" Type="varchar" MaxLength="99" Nullable="false" />
+        </EntityType>
+        <EntityType Name="productdb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="typeId" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="qty" Type="int" />
+          <Property Name="image" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="producttypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="number" Type="varchar" MaxLength="11" />
+          <Property Name="address" Type="varchar" MaxLength="99" />
+        </EntityType>
+        <EntityType Name="warehouse">
+          <Key>
+            <PropertyRef Name="orderId" />
+          </Key>
+          <Property Name="orderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="paymentID" Type="varchar" MaxLength="15" />
+          <Property Name="Name" Type="varchar" MaxLength="25" />
+          <Property Name="shippingAddress" Type="varchar" MaxLength="99" />
+          <Property Name="packagingStatus" Type="varchar" MaxLength="15" />
+          <Property Name="ShippingStatus" Type="varchar" MaxLength="15" />
+          <Property Name="DeliveryStatus" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <Association Name="cart_ibfk_1">
+          <End Role="productdb" Type="Self.productdb" Multiplicity="0..1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productdb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="productdb_ibfk_1">
+          <End Role="producttypes" Type="Self.producttypes" Multiplicity="0..1" />
+          <End Role="productdb" Type="Self.productdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producttypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productdb">
+              <PropertyRef Name="typeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="autopartsModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="autoparts" store:Type="Tables" />
+          <EntitySet Name="cart" EntityType="Self.cart" Schema="autoparts" store:Type="Tables" />
+          <EntitySet Name="guest" EntityType="Self.guest" Schema="autoparts" store:Type="Tables" />
+          <EntitySet Name="productdb" EntityType="Self.productdb" Schema="autoparts" store:Type="Tables" />
+          <EntitySet Name="producttypes" EntityType="Self.producttypes" Schema="autoparts" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="autoparts" store:Type="Tables" />
+          <EntitySet Name="warehouse" EntityType="Self.warehouse" Schema="autoparts" store:Type="Tables" />
+          <AssociationSet Name="cart_ibfk_1" Association="Self.cart_ibfk_1">
+            <End Role="productdb" EntitySet="productdb" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
+          <AssociationSet Name="productdb_ibfk_1" Association="Self.productdb_ibfk_1">
+            <End Role="producttypes" EntitySet="producttypes" />
+            <End Role="productdb" EntitySet="productdb" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="autopartsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="productdb">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="typeId" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="qty" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="producttype" Relationship="Self.productdb_ibfk_1" FromRole="productdb" ToRole="producttypes" />
+          <NavigationProperty Name="carts" Relationship="autopartsModel.cart_ibfk_1" FromRole="productdb" ToRole="cart" />
+        </EntityType>
+        <EntityType Name="producttype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="productdbs" Relationship="Self.productdb_ibfk_1" FromRole="producttypes" ToRole="productdb" />
+        </EntityType>
+        <Association Name="productdb_ibfk_1">
+          <End Role="producttypes" Type="Self.producttype" Multiplicity="0..1" />
+          <End Role="productdb" Type="Self.productdb" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producttypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productdb">
+              <PropertyRef Name="typeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="autopartsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="productdbs" EntityType="Self.productdb" />
+          <EntitySet Name="producttypes" EntityType="Self.producttype" />
+          <AssociationSet Name="productdb_ibfk_1" Association="Self.productdb_ibfk_1">
+            <End Role="producttypes" EntitySet="producttypes" />
+            <End Role="productdb" EntitySet="productdbs" />
+          </AssociationSet>
+          <EntitySet Name="admins" EntityType="autopartsModel.admin" />
+          <EntitySet Name="users" EntityType="autopartsModel.user" />
+          <EntitySet Name="guests" EntityType="autopartsModel.guest" />
+          <EntitySet Name="carts" EntityType="autopartsModel.cart" />
+          <AssociationSet Name="cart_ibfk_1" Association="autopartsModel.cart_ibfk_1">
+            <End Role="productdb" EntitySet="productdbs" />
+            <End Role="cart" EntitySet="carts" />
+          </AssociationSet>
+          <EntitySet Name="warehouses" EntityType="autopartsModel.warehouse" />
+        </EntityContainer>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="shipping" Type="Int32" Nullable="false" />
+          <Property Name="handling" Type="Int32" Nullable="false" />
+          <Property Name="localtax" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="number" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="99" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="guest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="shippingAddress" Type="String" Nullable="false" MaxLength="99" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="DatePurchased" Type="DateTime" />
+          <Property Name="isInCart" Type="Boolean" Nullable="false" />
+          <Property Name="authID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="partName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="productdb" Relationship="autopartsModel.cart_ibfk_1" FromRole="cart" ToRole="productdb" />
+        </EntityType>
+        <Association Name="cart_ibfk_1">
+          <End Type="autopartsModel.productdb" Role="productdb" Multiplicity="0..1" />
+          <End Type="autopartsModel.cart" Role="cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productdb">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="warehouse">
+          <Key>
+            <PropertyRef Name="orderId" />
+          </Key>
+          <Property Name="orderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paymentID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="shippingAddress" Type="String" MaxLength="99" FixedLength="false" Unicode="false" />
+          <Property Name="packagingStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ShippingStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="autopartsModelStoreContainer" CdmEntityContainer="autopartsEntities">
+          <EntitySetMapping Name="productdbs">
+            <EntityTypeMapping TypeName="autopartsModel.productdb">
+              <MappingFragment StoreEntitySet="productdb">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="typeId" ColumnName="typeId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producttypes">
+            <EntityTypeMapping TypeName="autopartsModel.producttype">
+              <MappingFragment StoreEntitySet="producttypes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="autopartsModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="localtax" ColumnName="localtax" />
+                <ScalarProperty Name="handling" ColumnName="handling" />
+                <ScalarProperty Name="shipping" ColumnName="shipping" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="autopartsModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="guests">
+            <EntityTypeMapping TypeName="autopartsModel.guest">
+              <MappingFragment StoreEntitySet="guest">
+                <ScalarProperty Name="shippingAddress" ColumnName="shippingAddress" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="carts">
+            <EntityTypeMapping TypeName="autopartsModel.cart">
+              <MappingFragment StoreEntitySet="cart">
+                <ScalarProperty Name="partName" ColumnName="partName" />
+                <ScalarProperty Name="authID" ColumnName="authID" />
+                <ScalarProperty Name="isInCart" ColumnName="isInCart" />
+                <ScalarProperty Name="DatePurchased" ColumnName="DatePurchased" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="warehouses">
+            <EntityTypeMapping TypeName="autopartsModel.warehouse">
+              <MappingFragment StoreEntitySet="warehouse">
+                <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
+                <ScalarProperty Name="ShippingStatus" ColumnName="ShippingStatus" />
+                <ScalarProperty Name="packagingStatus" ColumnName="packagingStatus" />
+                <ScalarProperty Name="shippingAddress" ColumnName="shippingAddress" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="paymentID" ColumnName="paymentID" />
+                <ScalarProperty Name="orderId" ColumnName="orderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

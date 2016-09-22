@@ -1,0 +1,78 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html >
+<head runat="server">
+    <title>E-commerce Autoparts Ordering System</title>
+    <link rel="stylesheet" href="styles/StyleSheet.css" type="text/css" />
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style2 {
+            width: 65px;
+        }
+        .auto-style3 {
+            width: 50px;
+        }
+        .auto-style4 {
+            width: 110px;
+            margin-left: 5px;
+        }
+        .auto-style5 {
+            width: 88px;
+        }
+        .auto-style6 {
+            width: 76px;
+        }
+        .auto-style7 {
+            width: 92px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div id="wrapper">
+            <div id="banner">
+                <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/BannerCar.jpg" Width="100%"  />
+            </div>
+            <div id="navigation">
+                <ul id="nav">
+                    <li class="auto-style6"><asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Pages/AboutUs.aspx">About US</asp:HyperLink></li>
+                    <li class="auto-style2">
+                        <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Index.aspx" Width="87px">Products</asp:HyperLink></li>
+                    <li class="auto-style7">
+                        <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Pages/ContactUs.aspx">Contact Us</asp:HyperLink></li>
+                    <li class="auto-style3">
+                        <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Pages/Management/AdminIndex.aspx">Admin</asp:HyperLink></li>
+                    <li class="auto-style4">
+                        <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Pages/Management/ReceivingDeskControl.aspx">ReceivingDesk</asp:HyperLink></li>
+                    <li class="auto-style5">
+                        <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Pages/Management/Warehouse.aspx">Warehouse</asp:HyperLink></li>
+                    <li style="float:right">
+                              <asp:HyperLink ID="InkLogout" runat="server" NavigateUrl="~/Pages/LoginRegister/Logout.aspx">Logout</asp:HyperLink>
+                    </li>
+                    
+                    <li style="float:right">  
+                         <asp:HyperLink ID="litStatus" runat="server" NavigateUrl="~/Pages/ShoppingCart.aspx" ></asp:HyperLink>
+                    </li>
+                    <li style="float:right">
+                        <asp:HyperLink ID="InkLogin" runat="server" NavigateUrl="~/Pages/LoginRegister/Login.aspx">Login</asp:HyperLink>
+                    </li>  
+                
+                    <li style="float:right">
+                        <asp:HyperLink ID="InkRegister" runat="server" NavigateUrl="~/Pages/LoginRegister/Register.aspx">Register</asp:HyperLink>
+                   </li>
+                </ul>
+
+            </div>
+            <div id="content">
+                <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">        
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>        
+    </div>
+    </form>
+</body>
+</html>
